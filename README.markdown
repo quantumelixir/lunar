@@ -3,17 +3,19 @@
 ## Setting
 
 A *r*x*c* game board with
-*m* humans
-*n* robots
-*b* blocks
-1 target (Any position. Usually center)
+
+* *m* humans
+* *n* robots
+* *b* blocks
+* *t* targets
 
 ## Rules
-Objective is to get all humans to the target/exit in least number of
+Objective is to get all humans to a target/exit in the least number of
 moves/steps. Blocks don't move. Robots and humans do; till they find an
 obstacle(robot/block/human) in that direction and stop exactly one square
 before it in that direction. Without an obstacle in the direction, a piece
-(human/robot) cannot move in that direction.
+(human/robot) cannot move in that direction. Game ends when all humans exit the
+board.
 
 ## Implementation
 

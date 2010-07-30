@@ -3,6 +3,57 @@
 BitBoard boardmask;
 BitBoard leftboards[64], rightboards[64], upboards[64], downboards[64];
 
+/* prints a nice game board with
+ *
+ * a, b, ... letter pieces for humans
+ * 1, 2, ... numbered pieces for robots
+ * # hashes for blocks
+ * @ squiggly for targets
+ *
+ * When a letter piece is on a target the
+ * corresponding capital letter is printed
+ *
+ * When a numbered piece is on a target we
+ * simply print the numbered piece overshadowing
+ * the target at that location
+ */
+void print_game(const Game* game, const State* state)
+{
+    int i, j, humancount = 0, robotcount = 0;
+    int ontarget;
+    char c;
+
+    printf(".");
+    for (i = 0; i <= 2*game->c; ++i) printf("-");
+    printf(".\n");
+
+    for (i = 8 * game->r; i > 0; i -= 8) {
+        printf("| ");
+        for (j = i - 8; j < i - 8 + game->c; ++j) {
+            ontarget = CHKBIT(game->target, j);
+            c = CHKBIT(game->blocks, j) ? '#' :
+                CHKBIT(state->humans, j) && ontarget ? 'a' + humancount++ :
+                CHKBIT(state->robots, j) && ontarget ? '1' + robotcount++ :
+                ontarget ? '@' :
+                CHKBIT(state->humans, j) ? 'A' + humancount++ :
+                CHKBIT(state->robots, j) ? '1' + robotcount++ :
+                '.';
+            printf("%c%s", c, !((j - i + 9) % game->c) ? " |\n" : " ");
+        }
+    }
+
+    printf(".");
+    for (i = 0; i <= 2*game->c; ++i) printf("-");
+    printf(".\n");
+
+    printf("Board Dimensions: %dx%d\n", game->r, game->c);
+    printf("Blocks          : %d\n", __builtin_popcount(game->blocks));
+    printf("Targets         : %d\n", __builtin_popcount(game->target));
+    printf("Human Count     : %d\n", __builtin_popcount(state->humans));
+    printf("Robot Count     : %d\n", __builtin_popcount(state->robots));
+    printf("\n");
+}
+
 int load_game(const char* filename, Game* game, State* state)
 {
     FILE* fin = fopen(filename, "rb");

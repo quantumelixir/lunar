@@ -98,5 +98,7 @@ int main()
             nstate.robots == state.robots
             ? "PASSED!" : "FAILED!");
 
+    print_game(&ngame, &nstate);
+
     return 0;
 }

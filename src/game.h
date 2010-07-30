@@ -26,6 +26,7 @@ typedef struct
     BitBoard robots;
 }State;
 
+void print_game(const Game* game, const State* state);
 int load_game(const char* filename, Game* game, State* state);
 int save_game(const char* filename, const Game* game, const State* state);
 

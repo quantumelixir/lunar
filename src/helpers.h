@@ -45,4 +45,22 @@
                                            + ((unsigned long long int)B8(d1)<<8)  \
                                            + B8(d0))
 
+/* for the bitboards we have to reverse each 8-bit argument d*/
+#define RB8__(x) ((x&0x0000000FLU)?128:0) \
+               + ((x&0x000000F0LU)?64:0)  \
+               + ((x&0x00000F00LU)?32:0)  \
+               + ((x&0x0000F000LU)?16:0)  \
+               + ((x&0x000F0000LU)?8:0)   \
+               + ((x&0x00F00000LU)?4:0)   \
+               + ((x&0x0F000000LU)?2:0)   \
+               + ((x&0xF0000000LU)?1:0)
+#define RB8(d) ((unsigned char)RB8__(HEX__(d)))
+#define BITBOARD(d7, d6, d5, d4, d3, d2, d1, d0) (((unsigned long long int)RB8(d7)<<56) \
+                                                + ((unsigned long long int)RB8(d6)<<48) \
+                                                + ((unsigned long long int)RB8(d5)<<40) \
+                                                + ((unsigned long long int)RB8(d4)<<32) \
+                                                + ((unsigned long long int)RB8(d3)<<24) \
+                                                + ((unsigned long long int)RB8(d2)<<16) \
+                                                + ((unsigned long long int)RB8(d1)<<8)  \
+                                                + RB8(d0))
 #endif /* __HELPERS_H__ */

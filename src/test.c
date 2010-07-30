@@ -19,5 +19,17 @@ int main()
     init_boards(5);
     print_bitboard(boardmask);
 
+    BitBoard test =  BITBOARD(
+                        00001011,
+                        00100000,
+                        00000000,
+                        00001000,
+                        00000000,
+                        00100000,
+                        00000000,
+                        11101010
+                     );
+    print_bitboard(test);
+
     return 0;
 }

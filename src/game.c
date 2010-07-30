@@ -32,10 +32,10 @@ void print_game(const Game* game, const State* state)
         for (j = i - 8; j < i - 8 + game->c; ++j) {
             ontarget = CHKBIT(game->target, j);
             c = CHKBIT(game->blocks, j) ? '#' :
-                CHKBIT(state->humans, j) && ontarget ? 'a' + humancount++ :
+                CHKBIT(state->humans, j) && ontarget ? 'A' + humancount++ :
                 CHKBIT(state->robots, j) && ontarget ? '1' + robotcount++ :
                 ontarget ? '@' :
-                CHKBIT(state->humans, j) ? 'A' + humancount++ :
+                CHKBIT(state->humans, j) ? 'a' + humancount++ :
                 CHKBIT(state->robots, j) ? '1' + robotcount++ :
                 '.';
             printf("%c%s", c, !((j - i + 9) % game->c) ? " |\n" : " ");
@@ -46,12 +46,11 @@ void print_game(const Game* game, const State* state)
     for (i = 0; i <= 2*game->c; ++i) printf("-");
     printf(".\n");
 
-    printf("Board Dimensions: %dx%d\n", game->r, game->c);
+    printf("Board Dimensions: %d x %d\n", game->r, game->c);
     printf("Blocks          : %d\n", __builtin_popcount(game->blocks));
     printf("Targets         : %d\n", __builtin_popcount(game->target));
     printf("Human Count     : %d\n", __builtin_popcount(state->humans));
     printf("Robot Count     : %d\n", __builtin_popcount(state->robots));
-    printf("\n");
 }
 
 int load_game(const char* filename, Game* game, State* state)
